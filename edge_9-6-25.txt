@@ -1,0 +1,93 @@
+9/6/25
+
+
+import java.util.HashSet;
+import java.util.Objects;
+
+class Main {
+    public static void main(String[] args) {
+        Graph g = new Graph(4, false); // Updated to 4 to include vertex 3
+        g.addEdge(0, 3);
+        g.addEdge(0, 2);
+        g.addEdge(0, 1);
+        g.printGraph();
+    }
+}
+
+class Edge {
+    int src;
+    int dest;
+    int weight;
+
+    Edge(int src, int dest, int weight) {
+        this.src = src;
+        this.dest = dest;
+        this.weight = weight;
+    }
+
+    Edge(int src, int dest) {
+        this(src, dest, 1);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Edge)) return false;
+        Edge edge = (Edge) o;
+        return src == edge.src && dest == edge.dest && weight == edge.weight;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(src, dest, weight);
+    }
+
+    @Override
+    public String toString() {
+        return src + " -> " + dest + " (weight: " + weight + ")";
+    }
+}
+
+class Graph {
+    HashSet<Edge> graph;
+    int vertices;
+    boolean isDirected;
+
+    Graph(int vertices, boolean isDirected) {
+        this.vertices = vertices;
+        this.isDirected = isDirected;
+        graph = new HashSet<>();
+    }
+    public void addEdge(int src, int dest) {
+        if (isValid(src, dest)) {
+            Edge e = new Edge(src, dest);
+            graph.add(e);
+            if (!isDirected) {
+                Edge e2 = new Edge(dest, src);
+                graph.add(e2);
+            }
+        } else {
+            System.out.println("Invalid source or destination");
+        }
+    }
+    public void addEdge(int src, int dest, int weight) {
+        if (isValid(src, dest)) {
+            Edge e = new Edge(src, dest, weight);
+            graph.add(e);
+            if (!isDirected) {
+                Edge e2 = new Edge(dest, src, weight);
+                graph.add(e2);
+            }
+        } else {
+            System.out.println("Invalid source or destination");
+        }
+    }
+    public boolean isValid(int src, int dest) {
+        return src >= 0 && dest >= 0 && src < vertices && dest < vertices && src != dest;
+    }
+    void printGraph() {
+        for (Edge e : graph) {
+            System.out.println(e);
+        }
+    }
+}

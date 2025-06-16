@@ -1,0 +1,27 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
+public class Main {
+    public static void main(String[] args) {
+        Search(new int[]{1,2,3,8,9,10,19,20},20);
+    }
+    public static void Search(int[]arr,int target){
+        int left=0;
+        int index=-1;
+        int right=nums.length-1;
+        while(left<=right){
+            int mid=(left+right)/2;
+            if(target>nums[mid]){
+                left=mid+1;
+            }
+            elseif(target<nums[mid]){
+                right=mid-1;
+            }
+            else{
+                index=mid;
+                break;
+            }
+        }
+        System.out.println(index==-1?"element not found":"element found at index:"+index);
+    }
+}
